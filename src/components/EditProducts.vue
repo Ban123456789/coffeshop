@@ -1,6 +1,5 @@
 <template>
   <loading v-if="isLoading"></loading>
-  <toastMessages></toastMessages>
   <button type="button" class="btn btn-primary mb-3" @click="openModel('add')">
     新增商品
   </button>
@@ -35,30 +34,14 @@
       </tr>
     </tbody>
   </table>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <pagination :pagination="pageNav" @current-page="getProducts"></pagination>
 </template>
 
 <script>
 import productModel from '../components/ProductsModel.vue'
 import delProductModel from '../components/delProductModel.vue'
 import loading from '../components/Loading.vue'
-import toastMessages from '../components/TostMessages.vue'
+import pagination from '../components/Pagination.vue'
 
 export default {
   data() {
@@ -68,6 +51,7 @@ export default {
       temProduct: {},
       isNew: '',
       isLoading: false,
+      pageNav: {},
     }
   },
   inject: ['mitter'],
@@ -75,15 +59,17 @@ export default {
     productModel,
     delProductModel,
     loading,
-    toastMessages,
+    pagination,
   },
   methods: {
-    getProducts() {
-      const getProductsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products`
+    getProducts(page = 1) {
+      const getProductsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.isLoading = true
       this.$http.get(getProductsApi).then((res) => {
         this.products = res.data.products
         this.isLoading = false
+        this.pageNav = res.data.pagination
+        // console.log(res.data)
       })
     },
     openModel(isNew, item) {
@@ -118,9 +104,20 @@ export default {
       this.temProduct.origin_price = parseInt(this.temProduct.origin_price)
       this.temProduct.price = parseInt(this.temProduct.price)
       this.$http[apiMethod](api, { data: this.temProduct }).then((res) => {
-        console.log(res)
         this.$refs.addProduct.hideModel()
         this.getProducts()
+        if (res.data.success) {
+          this.mitter.emit('msg', {
+            title: res.data.message,
+            style: true,
+          })
+        } else {
+          this.mitter.emit('msg', {
+            title: '更新失敗',
+            style: false,
+            content: res.data.message.join('、'),
+          })
+        }
       })
     },
     delProduct(item) {
@@ -129,6 +126,18 @@ export default {
         console.log(res)
         this.getProducts()
         this.$refs.delProduct.hideModel()
+        if (res.data.success) {
+          this.mitter.emit('msg', {
+            title: res.data.message,
+            style: true,
+          })
+        } else {
+          this.mitter.emit('msg', {
+            title: '刪除失敗',
+            style: false,
+            content: res.data.message,
+          })
+        }
       })
     },
   },

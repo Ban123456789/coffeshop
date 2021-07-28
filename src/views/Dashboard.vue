@@ -16,6 +16,7 @@
       <div>
         <h3 class="mb-5">Dashboard</h3>
       </div>
+      <toastMessages></toastMessages>
       <router-view></router-view>
     </div>
   </div>
@@ -23,15 +24,21 @@
 
 <script>
 import mitter from '@/methods/mitter.js'
+import toastMessages from '../components/TostMessages.vue'
 
 export default {
+  components: {
+    toastMessages,
+  },
   data() {
     return {
       choose: false,
     }
   },
-  provide: {
-    mitter,
+  provide() {
+    return {
+      mitter,
+    }
   },
   created() {
     const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1')

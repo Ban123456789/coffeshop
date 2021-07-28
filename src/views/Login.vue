@@ -32,7 +32,7 @@ export default {
         username: '',
         password: '',
       },
-      signInApi: `${process.env.VUE_APP_PATH}/admin/signin`,
+      signInApi: `${process.env.VUE_APP_API}/admin/signin`,
     }
   },
   components: {

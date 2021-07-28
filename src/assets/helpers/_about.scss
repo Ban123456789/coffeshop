@@ -1,0 +1,27 @@
+.ml9 {
+    position: relative;
+        top: -400px;
+        left: 200px;
+    z-index: 10;
+    font-weight: 200;
+    font-size: 4em;
+    display: inline-block;
+    width: 600px;
+    background-color: rgba( #d1cdcd, 0.3);
+    text-align: center;
+  }
+  
+  .ml9 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.2em;
+    padding-right: 0.05em;
+    padding-bottom: 0.1em;
+    overflow: hidden;
+  }
+  
+  .ml9 .letter {
+    transform-origin: 50% 100%;
+    display: inline-block;
+    line-height: 1em;
+  }

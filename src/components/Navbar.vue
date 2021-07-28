@@ -28,13 +28,13 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link to="/about" class="nav-link text-white-50">關於 Always</router-link>
+            <router-link to="/" class="nav-link text-white-50">關於 Always</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/" class="nav-link text-white-50">最新消息</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/" class="nav-link text-white-50">商品介紹</router-link>
+            <router-link to="/products" class="nav-link text-white-50">商品介紹</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/login" class="nav-link text-white-50">登入</router-link>

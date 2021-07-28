@@ -1,9 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 // import Home from '../views/Home.vue'
 import About from '../views/About.vue'
+import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
+
+
 import Dashboard from '../views/Dashboard.vue'
 import editProducts from '../components/EditProducts.vue'
+import Coupon from '../components/Coupon.vue'
+
 
 const routes = [
   // {
@@ -12,9 +17,14 @@ const routes = [
   //   component: About,
   // },
   {
-    path: '/about',
+    path: '/',
     name: 'About',
     component: About,
+  },
+  {
+    path: '/products',
+    name: 'Products',
+    component: Products
   },
   {
     path: '/login',
@@ -32,9 +42,14 @@ const routes = [
         component: editProducts
       },
       {
-        path: 'editcoupon',
-        name: 'EditCoupon',
-        component: editProducts
+        path: 'coupon',
+        name: 'Coupon',
+        component: Coupon
+      },
+      {
+        path: 'logout',
+        name: 'Logout',
+        component: Coupon
       },
     ],
   },

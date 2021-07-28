@@ -21,6 +21,12 @@
     </swiper-slide>
     ...
   </swiper>
+  <h1 class="ml9">
+    <span class="text-wrapper">
+      <span class="letters text-light">Coffee mornings</span>
+    </span>
+  </h1>
+  <h1>123</h1>
 </template>
 
 <script>
@@ -41,6 +47,32 @@ export default {
   data() {
     return {}
   },
-  mounted() {},
+  created() {
+    const getProductsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products`
+    this.$http.get(getProductsApi).then((res) => {
+      console.log(res)
+    })
+  },
+  mounted() {
+    var textWrapper = document.querySelector('.ml9 .letters')
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>")
+
+    anime
+      .timeline({ loop: true })
+      .add({
+        targets: '.ml9 .letter',
+        scale: [0, 1],
+        duration: 1500,
+        elasticity: 600,
+        delay: (el, i) => 45 * (i + 1),
+      })
+      .add({
+        targets: '.ml9',
+        opacity: 0,
+        duration: 1000,
+        easing: 'easeOutExpo',
+        delay: 1000,
+      })
+  },
 }
 </script>

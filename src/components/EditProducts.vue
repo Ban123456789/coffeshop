@@ -21,8 +21,8 @@
       <tr v-for="data in products" :key="data.id">
         <td>{{ data.category }}</td>
         <th>{{ data.title }}</th>
-        <td>{{ data.origin_price }}</td>
-        <td>{{ data.price }}</td>
+        <td>{{ $filter.currency(data.origin_price) }}</td>
+        <td>{{ $filter.currency(data.price) }}</td>
         <td>
           <div class="text-success" v-if="data.is_enabled === 1">上架</div>
           <div class="text-danger" v-else>未上架</div>
@@ -54,7 +54,7 @@ export default {
       pageNav: {},
     }
   },
-  inject: ['mitter'],
+  inject: ['mitter', 'callbackMsg'],
   components: {
     productModel,
     delProductModel,
@@ -106,18 +106,20 @@ export default {
       this.$http[apiMethod](api, { data: this.temProduct }).then((res) => {
         this.$refs.addProduct.hideModel()
         this.getProducts()
-        if (res.data.success) {
-          this.mitter.emit('msg', {
-            title: res.data.message,
-            style: true,
-          })
-        } else {
-          this.mitter.emit('msg', {
-            title: '更新失敗',
-            style: false,
-            content: res.data.message.join('、'),
-          })
-        }
+        this.callbackMsg(res)
+        // 以下是原本回傳 message 的程式碼，但因為每個地方都要用到，所以就用 provide 的方式引入，這樣就省下9行程式碼了
+        // if (res.data.success) {
+        //   this.mitter.emit('msg', {
+        //     title: res.data.message,
+        //     style: true,
+        //   })
+        // } else {
+        //   this.mitter.emit('msg', {
+        //     title: '更新失敗',
+        //     style: false,
+        //     content: res.data.message.join('、'),
+        //   })
+        // }
       })
     },
     delProduct(item) {
@@ -126,18 +128,19 @@ export default {
         console.log(res)
         this.getProducts()
         this.$refs.delProduct.hideModel()
-        if (res.data.success) {
-          this.mitter.emit('msg', {
-            title: res.data.message,
-            style: true,
-          })
-        } else {
-          this.mitter.emit('msg', {
-            title: '刪除失敗',
-            style: false,
-            content: res.data.message,
-          })
-        }
+        this.callbackMsg(res)
+        // if (res.data.success) {
+        //   this.mitter.emit('msg', {
+        //     title: res.data.message,
+        //     style: true,
+        //   })
+        // } else {
+        //   this.mitter.emit('msg', {
+        //     title: '刪除失敗',
+        //     style: false,
+        //     content: res.data.message,
+        //   })
+        // }
       })
     },
   },

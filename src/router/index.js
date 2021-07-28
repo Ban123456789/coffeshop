@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import editProducts from '../components/EditProducts.vue'
 import Coupon from '../components/Coupon.vue'
+import Orders from '../components/Orders.vue'
 
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
         path: 'logout',
         name: 'Logout',
         component: Coupon
+      },
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: Orders
       },
     ],
   },

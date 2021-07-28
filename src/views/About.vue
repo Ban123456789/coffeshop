@@ -1,6 +1,7 @@
 <template>
   <navbar></navbar>
   <swiper
+    class="mt-6"
     :slides-per-view="1"
     :space-between="50"
     :auto-play="true"
@@ -11,13 +12,13 @@
     }"
   >
     <swiper-slide>
-      <img src="../assets/coverimg.jpg" style="height: 600px; width: 100vw" alt="" />
+      <img src="../../public/images/coverimg.jpg" style="height: 600px; width: 100vw" alt="" />
     </swiper-slide>
     <swiper-slide>
-      <img src="../assets/coverimg2.jpg" style="height: 600px; width: 100vw" alt="" />
+      <img src="../../public/images/coverimg2.jpg" style="height: 600px; width: 100vw" alt="" />
     </swiper-slide>
     <swiper-slide>
-      <img src="../assets/coverimg3.jpg" style="height: 600px; width: 100vw" alt="" />
+      <img src="../../public/images/coverimg3.jpg" style="height: 600px; width: 100vw" alt="" />
     </swiper-slide>
     ...
   </swiper>

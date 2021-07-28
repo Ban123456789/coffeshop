@@ -1,3 +1,23 @@
+$main-color: rgb(175, 158, 143);
+$text-color: rgb(92, 39, 39);
+
+.text-brown {
+  color: $text-color;
+}
+.text-border {
+  font-weight: 900;
+}
+.bg-brown {
+  background-color: $main-color;
+}
+.position-fixed {
+  z-index: 11;
+}
+.mt-6 {
+  margin-top: 86px;
+}
+
+// about
 .ml9 {
     position: relative;
         top: -400px;

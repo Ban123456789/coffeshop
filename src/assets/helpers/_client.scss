@@ -1,20 +1,71 @@
-$main-color: rgb(175, 158, 143);
+$main-color: rgb(230, 216, 204);
+$second-color: rgba(124, 76, 44, 0.87);
 $text-color: rgb(92, 39, 39);
 
+body{
+  background-color: $second-color;
+}
+p {
+  margin: 0;
+}
+
+// 文字通用設定
 .text-brown {
   color: $text-color;
 }
 .text-border {
   font-weight: 900;
 }
+.title {
+  font-size: 20px;
+}
+.text-space {
+  letter-spacing: 2px;
+}
+// 背景通用設定
 .bg-brown {
   background-color: $main-color;
 }
+// 位置通用設定
 .position-fixed {
   z-index: 11;
 }
 .mt-6 {
   margin-top: 86px;
+}
+.center {
+  margin: 0 auto;
+}
+// icen 大小設定
+.icon-size {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+.nav-icon-size {
+  width: 30px;
+  height: 30px;
+}
+
+// nav
+.nav-action {
+  transition: ease .5s;
+  transition-property: font-size;
+  position: relative;
+  &:hover {
+    transition: ease .5s;
+    font-size: 20px;
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      display: inline-block;
+      width: 90%;
+      height: 100%;
+      background-color: rgb(255, 255, 255);
+      transform: skew(-30deg);
+    }
+  }
 }
 
 // about
@@ -44,4 +95,116 @@ $text-color: rgb(92, 39, 39);
     transform-origin: 50% 100%;
     display: inline-block;
     line-height: 1em;
+  }
+
+  // product
+  .coffe-bean {
+    background-image: url('/images/cofeebean.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    position: relative;
+    &::before {
+      content: '嚴選經典咖啡豆製成';
+      background-color: rgba(253, 252, 248, 0.596);
+      padding: 50px 100px;
+      position: absolute;
+        top: 30%;
+        left: 32%;
+      font-size: 24px;
+      font-weight: 900;
+      color: $text-color;
+      letter-spacing: 3px;
+      animation: tiao_fly 0.2s 0s alternate infinite;
+    }
+  }
+  .category {
+    background-color: rgb(245, 235, 235);
+    padding: 0;
+    border-radius: 5px 5px;
+    li {
+      border-bottom: 1px solid rgb(146, 145, 145);
+    }
+    .title {
+      padding: 10px;
+      text-align: center;
+      color: white;
+      font-size: 30px;
+      font-weight: 900;
+      background-color: brown;
+    }
+    a {
+      text-decoration: none;
+      color: $text-color;
+      font-weight: 900;
+      font-size: 20px;
+      display: inline-block;
+      width: 100%;
+      padding: 10px 30px;
+      &:hover {
+        background-color: rgb(199, 183, 154);
+        transition: .5s;
+      }
+    }
+  }
+  .category-title {
+    position: relative;
+    padding-left: 20px;
+    // display: inline-block;
+    &::before {
+      content: '';
+      position: absolute;
+        left: -1px;
+      display: inline-block;
+      width: 5px;
+      height: 30px;
+      background-color: cadetblue;
+    }
+  }
+  .form-select {
+    width: auto;
+  }
+  .card {
+    background-color: rgba(255, 255, 255, 0);
+    box-shadow: 3px 3px 10px black;
+    text-decoration: none;
+    transform: scale(1);
+    transition: transform 0.5s;
+    position: relative;
+    &:hover{
+      transform: scale(1.06);
+      transition: transform 0.5s;
+      &::before {
+        content: '查看更多';
+        color: rgb(75, 74, 74);
+        font-size: 25px;
+        font-weight: 900;
+        text-align: center;
+        line-height: 150px;
+        display: inline-block;
+        width: 100%;
+        height: 150px;
+        background-color: rgba(231, 234, 240, 0.63);
+        position: absolute;
+      }
+    }
+    .sale {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+    }
+    .card-img-top {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+    }
+    p {
+      margin-right: 10px;
+    }
+    .cart {
+      width: 25px;
+      height: 25px;
+      margin-right: 20px;
+    }
   }

@@ -26,19 +26,19 @@
             <router-link to="/products" class="nav-link text-brown text-border">商品介紹</router-link>
           </li>
           <li class="nav-item px-2">
-            <router-link to="/login" class="nav-link text-brown text-border"
+            <router-link to="/login"
               ><img src="/icons/gear-option.png" class="nav-icon-size" alt="" ref="tooltipLogin"
             /></router-link>
           </li>
           <li class="nav-item px-2">
-            <router-link to="/login" class="nav-link text-brown text-border"
+            <router-link to="/login"
               ><img src="/icons/magnifier.png" class="nav-icon-size" alt="" ref="tooltipSerch"
             /></router-link>
           </li>
           <li class="nav-item px-2">
-            <router-link to="/login" class="nav-link text-brown text-border"
-              ><img src="/icons/b-cart.png" class="nav-icon-size" alt="" ref="tooltipCart"
-            /></router-link>
+            <label for="cartBtn"><img src="/icons/b-cart.png" class="nav-icon-size" alt="" ref="tooltipCart"/></label>
+            <input id="cartBtn" type="checkbox" name="cartBtn" class="d-none" />
+            <cart></cart>
           </li>
         </ul>
       </div>
@@ -48,8 +48,12 @@
 
 <script>
 import toolTip from '../methods/toolTip.js'
+import cart from '../components/Cart.vue'
 
 export default {
+  components: {
+    cart,
+  },
   mounted() {
     const tipLogin = this.$refs.tooltipLogin
     const tipSearch = this.$refs.tooltipSerch
@@ -57,6 +61,9 @@ export default {
     toolTip(tipLogin, '管理後臺')
     toolTip(tipSearch, '搜尋商品')
     toolTip(tipCart, '購物車')
+  },
+  methods: {
+    showCart() {},
   },
 }
 </script>

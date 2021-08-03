@@ -24,7 +24,7 @@
         <td>{{ $filter.currency(data.origin_price) }}</td>
         <td>{{ $filter.currency(data.price) }}</td>
         <td>
-          <div class="text-success" v-if="data.is_enabled === 1">上架</div>
+          <div class="text-success" v-if="data.is_enabled === true">上架</div>
           <div class="text-danger" v-else>未上架</div>
         </td>
         <td>
@@ -75,7 +75,7 @@ export default {
     openModel(isNew, item) {
       if (isNew === 'add') {
         // 新增商品
-        this.temProduct = {}
+        this.temProduct = { is_enabled: true }
         this.$refs.addProduct.showModel()
         this.isNew = isNew
       } else if (isNew === 'edit') {
@@ -129,18 +129,6 @@ export default {
         this.getProducts()
         this.$refs.delProduct.hideModel()
         this.callbackMsg(res)
-        // if (res.data.success) {
-        //   this.mitter.emit('msg', {
-        //     title: res.data.message,
-        //     style: true,
-        //   })
-        // } else {
-        //   this.mitter.emit('msg', {
-        //     title: '刪除失敗',
-        //     style: false,
-        //     content: res.data.message,
-        //   })
-        // }
       })
     },
   },

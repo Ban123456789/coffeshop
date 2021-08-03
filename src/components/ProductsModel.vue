@@ -166,6 +166,7 @@ export default {
   },
   methods: {
     uploadFile() {
+      // 新增圖片
       const uploadedFile = this.$refs.imgFile.files[0]
       const uploadFileApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`
       let formData = new FormData()

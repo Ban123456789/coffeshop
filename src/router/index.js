@@ -3,6 +3,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import About from '../views/About.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
+import Cart from '../components/Cart.vue'
+import ProductDetail from '../components/ProductDetail.vue'
 
 
 import Dashboard from '../views/Dashboard.vue'
@@ -25,7 +27,12 @@ const routes = [
   {
     path: '/products',
     name: 'Products',
-    component: Products
+    component: Products,
+  },
+  {
+    path: '/detail/:id',
+    name: 'ProductDetail',
+    component: ProductDetail,
   },
   {
     path: '/login',

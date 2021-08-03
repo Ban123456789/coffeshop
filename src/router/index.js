@@ -4,6 +4,7 @@ import About from '../views/About.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
 import Cart from '../components/Cart.vue'
+import Order from '../components/Order.vue'
 import ProductDetail from '../components/ProductDetail.vue'
 
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order
   },
   {
     path: '/dashboard',

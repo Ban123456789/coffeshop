@@ -61,14 +61,14 @@
             <div class="card-body">
               <h5 class="card-title text-center text-space title text-border text-light">{{ data.title }}</h5>
               <div class="text-center">
-                <p class="title text-border text-light d-inline">NT ${{ data.price }}</p>
+                <p class="title text-border text-light d-inline">NT ${{ $filter.currency(data.price) }}</p>
                 <del class="text-border text-light" v-if="data.price !== data.origin_price"
-                  >NT ${{ data.origin_price }}</del
+                  >NT ${{ $filter.currency(data.origin_price) }}</del
                 >
               </div>
             </div>
-            <a href="#" class="btn btn-danger text-border" @click.prevent="addCart"
-              ><img src="/icons/w-cart.png" class="cart" alt="" />加入購物車</a
+            <a href="#" class="btn btn-danger text-border" @click.prevent="addCart(data.id)"
+              ><img src="/icons/w-cart.png" class="cart-icon" alt="" />加入購物車</a
             >
           </a>
         </div>
@@ -113,7 +113,16 @@ export default {
         }
       })
     },
-    addCart() {},
+    addCart(id) {
+      const addCartApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      let data = {
+        product_id: id,
+        qty: 1,
+      }
+      this.$http.post(addCartApi, { data: data }).then((res) => {
+        console.log(res.data)
+      })
+    },
   },
   created() {
     this.getProducts()

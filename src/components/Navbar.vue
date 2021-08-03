@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-brown position-fixed top-0 start-0 container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-brown position-fixed top-0 start-0 container-fluid shadow-1">
     <div class="container-fluid d-flex justify-content-between">
       <a class="navbar-brand" href="#">
         <img src="../../public/images/logo.png" alt="風味留醇咖啡" style="width: 100px; height: 60px" />
@@ -36,9 +36,11 @@
             /></router-link>
           </li>
           <li class="nav-item px-2">
-            <label for="cartBtn"><img src="/icons/b-cart.png" class="nav-icon-size" alt="" ref="tooltipCart"/></label>
+            <label for="cartBtn"
+              ><img src="/icons/b-cart.png" class="nav-icon-size" alt="" @click="updateCarts" ref="tooltipCart"
+            /></label>
             <input id="cartBtn" type="checkbox" name="cartBtn" class="d-none" />
-            <cart></cart>
+            <cart :carts="carts" :updateCarts="updateCarts"></cart>
           </li>
         </ul>
       </div>
@@ -54,6 +56,11 @@ export default {
   components: {
     cart,
   },
+  data() {
+    return {
+      carts: [],
+    }
+  },
   mounted() {
     const tipLogin = this.$refs.tooltipLogin
     const tipSearch = this.$refs.tooltipSerch
@@ -63,7 +70,15 @@ export default {
     toolTip(tipCart, '購物車')
   },
   methods: {
-    showCart() {},
+    updateCarts() {
+      const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.get(getCartsApi).then((res) => {
+        this.carts = res.data.data.carts
+        res.data.data.carts.forEach((item) => {
+          console.log(item.product.title)
+        })
+      })
+    },
   },
 }
 </script>

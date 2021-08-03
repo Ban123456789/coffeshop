@@ -4,6 +4,14 @@ $text-color: rgb(92, 39, 39);
 
 body{
   background-color: $second-color;
+  height: 100vh;
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #575757; /* or add it to the track */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #cacaca;
+    }
 }
 p {
   margin: 0;
@@ -25,6 +33,9 @@ p {
 // 背景通用設定
 .bg-brown {
   background-color: $main-color;
+}
+.shadow-1 {
+  box-shadow: 1px 1px 10px rgb(0, 0, 0);
 }
 // 位置通用設定
 .position-fixed {
@@ -204,7 +215,7 @@ p {
     p {
       margin-right: 10px;
     }
-    .cart {
+    .cart-icon {
       width: 25px;
       height: 25px;
       margin-right: 20px;
@@ -226,6 +237,9 @@ p {
   .count-content {
     border-radius: 5px;
     padding: 5px;
+    color: white;
+    text-align: center;
+    font-weight: 900;
   }
   .description-content {
     background-color: cornsilk;
@@ -255,10 +269,18 @@ p {
   .cart {
     background-color: rgb(56, 56, 56);
     height: 100%;
-    width: 23%;
+    width: 27%;
     position: fixed;
     top: 0;
     right: 0;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 5px;
+      background-color: #575757; /* or add it to the track */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #cacaca;
+    }
     ul {
       padding: 0;
     }
@@ -266,6 +288,7 @@ p {
       background-color: rgb(56, 56, 56);
       padding: 5px 10px;
       border-bottom: 1px solid black;
+      position: relative;
       &:first-child {
         background-color: rgb(31, 30, 30);
         padding: 15px;
@@ -274,8 +297,9 @@ p {
         text-decoration: none;
       }
       .del-btn {
-        padding-top: 20px;
-        padding-left: 50px;
+        position: absolute;
+        top: 25px;
+        right: 15px
       }
     }
     .cart-img {
@@ -287,4 +311,54 @@ p {
   }
   #cartBtn:checked ~ .cart-container {
     visibility: visible;
+  }
+
+  // progressbar
+  #progressbar {
+  	margin-bottom: 30px;
+  	overflow: hidden;
+  	/*CSS counters to number the steps*/
+  	counter-reset: step;
+  }
+  #progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+  }
+  #progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 20px;
+    line-height: 20px;
+    display: block;
+    font-size: 10px;
+    color: #333;
+    background: white;
+    border-radius: 3px;
+    margin: 0 auto 5px auto;
+  }
+  /*progressbar connectors*/
+  #progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; /*put it behind the numbers*/
+  }
+  #progressbar li:first-child:after {
+    /*connector not needed before the first step*/
+    content: none; 
+  }
+  /*marking active/completed steps green*/
+  /*The number of the step and the connector before it = green*/
+  #progressbar li.active:before,  #progressbar li.active:after{
+    background: #27AE60;
+    color: white;
   }

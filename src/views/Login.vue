@@ -1,23 +1,29 @@
 <template>
   <navbar></navbar>
-  <div class="container mt-5 w-25">
-    <form>
+  <div class="container mt-6 w-25 db">
+    <form class="pt-5">
+      <img style="background-image: url(/images/cappuccino.jpg)" class="db-img" alt="" />
+      <div class="title text-border text-light mb-3 p-3" style="">登入後台系統</div>
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">帳號</label>
         <input
           type="email"
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           v-model="user.username"
+          placeholder="後臺管理帳號"
         />
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">密碼</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" v-model="user.password" />
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          v-model="user.password"
+          placeholder="後臺管理密碼"
+        />
       </div>
-      <button type="submit" class="btn btn-primary" @click.prevent="signinFn">登入</button>
+      <button type="submit" class="btn btn-success d-block w-100" @click.prevent="signinFn">登入</button>
     </form>
   </div>
 </template>

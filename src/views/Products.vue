@@ -67,9 +67,7 @@
                 >
               </div>
             </div>
-            <a href="#" class="btn btn-danger text-border" @click.prevent="addCart(data.id)"
-              ><img src="/icons/w-cart.png" class="cart-icon" alt="" />加入購物車</a
-            >
+            <a href="#" class="btn btn-danger text-border" @click.prevent="addCart(data.id)"> 加入購物車</a>
           </a>
         </div>
       </div>
@@ -80,6 +78,7 @@
 <script>
 import navbar from '../components/Navbar.vue'
 import coffeeLoading from '../components/cofeeLoding.vue'
+import swal from 'sweetalert'
 
 export default {
   components: {
@@ -119,8 +118,18 @@ export default {
         product_id: id,
         qty: 1,
       }
+      this.isLoading = true
       this.$http.post(addCartApi, { data: data }).then((res) => {
         console.log(res.data)
+        if (res.data.success) {
+          swal({
+            title: '成功加入購物車',
+            icon: 'success',
+            timer: 2000,
+            button: false,
+          })
+        }
+        this.isLoading = false
       })
     },
   },

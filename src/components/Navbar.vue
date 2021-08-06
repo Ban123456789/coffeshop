@@ -51,6 +51,7 @@
 <script>
 import toolTip from '../methods/toolTip.js'
 import cart from '../components/Cart.vue'
+import mitt from '../methods/mitter.js'
 
 export default {
   components: {
@@ -74,9 +75,6 @@ export default {
       const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(getCartsApi).then((res) => {
         this.carts = res.data.data.carts
-        res.data.data.carts.forEach((item) => {
-          console.log(item.product.title)
-        })
       })
     },
   },

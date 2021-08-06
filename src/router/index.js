@@ -3,8 +3,10 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import About from '../views/About.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
-import Cart from '../components/Cart.vue'
 import Order from '../components/Order.vue'
+import CartDetail from '../components/OrderCart.vue'
+import Personal from '../components/OrderPersonal.vue'
+import Check from '../components/OrderCheck.vue'
 import ProductDetail from '../components/ProductDetail.vue'
 
 
@@ -43,7 +45,24 @@ const routes = [
   {
     path: '/order',
     name: 'Order',
-    component: Order
+    component: Order,
+    children: [
+      {
+        path: 'cart',
+        name: 'CartDetail',
+        component: CartDetail
+      },
+      {
+        path: 'personal',
+        name: 'Personal',
+        component: Personal
+      },
+      {
+        path: 'check',
+        name: 'Check',
+        component: Check
+      },
+    ]
   },
   {
     path: '/dashboard',

@@ -12,6 +12,7 @@
     "bootstrap": "^5.0.2",
     "core-js": "^3.6.5",
     "mitt": "^3.0.0",
+    "sweetalert": "^2.1.2",
     "swiper": "^6.7.5",
     "vue": "^3.0.0",
     "vue-awesome-swiper": "^4.1.1",

@@ -20,13 +20,13 @@
               <img :style="{ backgroundImage: 'url(' + data.product.imageUrl + ')' }" class="order-img" alt="" />
               <p class="text-border">{{ data.product.title }}</p>
             </th>
-            <td>NT ${{ $filter.currency(data.product.price) }}</td>
+            <td>NT ${{ data.product.price }}</td>
             <td>
               <button class="count text-border" @click="countBtn('reduce', data.qty, data.id)">-</button>
               <input type="number" class="mb-5 count-content text-dark" :value="data.qty" disabled />
               <button class="count text-border" @click="countBtn('add', data.qty, data.id)">+</button>
             </td>
-            <td>NT ${{ $filter.currency(data.total) }}</td>
+            <td>NT ${{ data.total }}</td>
             <td><a href="" @click.prevent="delCart(data.id)" class="btn btn-outline-danger">刪除</a></td>
           </tr>
         </tbody>
@@ -42,7 +42,7 @@
         <tbody>
           <tr>
             <th>小計:</th>
-            <td>NT ${{ $filter.currency(cartsMsg.total) }}</td>
+            <td>NT ${{ cartsMsg.total }}</td>
           </tr>
           <tr>
             <th>運費:</th>
@@ -50,7 +50,7 @@
           </tr>
           <tr>
             <th>合計:</th>
-            <td>NT ${{ $filter.currency(cartsMsg.final_total + 60) }}</td>
+            <td>NT ${{ cartsMsg.final_total + 60 }}</td>
           </tr>
           <tr>
             <th>
@@ -77,14 +77,12 @@ export default {
   methods: {
     updateCarts() {
       const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
-      this.isLoading = true
       this.$http.get(getCartsApi).then((res) => {
         this.carts = res.data.data.carts
         this.cartsMsg = {
           total: res.data.data.total,
           final_total: res.data.data.final_total,
         }
-        this.isLoading = false
       })
     },
     delCart(id) {

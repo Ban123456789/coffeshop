@@ -14,12 +14,30 @@
             aria-controls="collapseOne"
             @click="showOrder"
           >
-            購物車 (2)件
+            購物車 ({{ carts.length }})件
           </button>
         </h2>
         <div id="orders" class="accordion-collapse collapse show" ref="orders">
           <div class="accordion-body">
-            <img src="" style="background-image: url(/images/cappuccino.jpg)" class="order-img" alt="" />
+            <table class="table bg-light">
+              <tbody>
+                <tr>
+                  <th class="text-border">商品資訊</th>
+                  <td class="text-border">單件價格</td>
+                  <td class="text-border">數量</td>
+                  <td class="text-border">小計</td>
+                </tr>
+                <tr v-for="data in carts" :key="data.id">
+                  <th>
+                    <img :style="{ backgroundImage: 'url(' + data.product.imageUrl + ')' }" class="order-img" alt="" />
+                    <p class="text-border d-inline-block mx-3">{{ data.product.title }}</p>
+                  </th>
+                  <td>NT ${{ data.product.price }}</td>
+                  <td>{{ data.qty }}{{ data.product.unit }}</td>
+                  <td>NT ${{ data.total }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -71,6 +89,12 @@ export default {
   components: {
     navbar,
   },
+  data() {
+    return {
+      carts: [],
+      cartsMsg: {},
+    }
+  },
   methods: {
     showOrder() {
       const collapseEl = this.$refs.orders
@@ -78,6 +102,19 @@ export default {
         toggle: true,
       })
     },
+    updateCarts() {
+      const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.get(getCartsApi).then((res) => {
+        this.carts = res.data.data.carts
+        this.cartsMsg = {
+          total: res.data.data.total,
+          final_total: res.data.data.final_total,
+        }
+      })
+    },
+  },
+  created() {
+    this.updateCarts()
   },
 }
 </script>

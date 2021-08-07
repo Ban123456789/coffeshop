@@ -34,6 +34,10 @@
       </div>
       <form class="bg-light table-radius p-3">
         <div class="mb-3">
+          <label for="check" class="form-label">若收件人姓名與手機號碼與上方資料相同，請打勾</label>
+          <input type="checkbox" id="check" class="mx-2" v-model="check" />
+        </div>
+        <div class="mb-3">
           <label for="person" class="form-label">收件人姓名*</label>
           <input type="text" class="form-control" id="person" v-model="shipment.person" />
         </div>
@@ -45,24 +49,37 @@
             id="cellphone"
             minlength="10"
             maxlength="10"
-            v-model="shipment.person"
+            v-model="shipment.cellphone"
           />
         </div>
         <div class="mb-3 row">
           <label for="">收件人地址*</label>
           <div class="col-6">
-            <select name="" id="">
-              <option value=""></option>
+            <select
+              name="city"
+              id="city"
+              style="width:100%; padding:5px 10px; border-radius:5px"
+              @click="getCity"
+              v-model="address.city"
+            >
+              <option value="" disabled>請選擇縣市</option>
+              <option :value="i" v-for="(city, i) in city" :key="i">{{ i }}</option>
             </select>
           </div>
           <div class="col-6">
-            <select name="" id="">
-              <option value=""></option>
+            <select
+              name="country"
+              id="country"
+              style="width:100%; padding:5px 10px; border-radius:5px"
+              v-model="address.country"
+            >
+              <option value="" disabled>請選擇鄉鎮</option>
+              <option :value="country" v-for="country in country" :key="country">{{ country }}</option>
             </select>
           </div>
         </div>
         <div class="mb-3">
-          <input type="text" class="form-control" />
+          <input type="text" class="form-control" v-model="shipment.address" />
         </div>
       </form>
     </div>
@@ -128,7 +145,7 @@
               <a href="#/order/cart" class="btn btn-outline-info" style="width:100%">返回購物車</a>
             </th>
             <td>
-              <a href="#/order/check" @click.prevent="submitOrder" class="btn btn-info" style="width:100%">提交訂單</a>
+              <a href="#/order/check" @click="submitOrder" class="btn btn-info" style="width:100%">提交訂單</a>
             </td>
           </tr>
         </tbody>
@@ -140,7 +157,8 @@
 <script>
 import navbar from '../components/Navbar.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
-import { jsonp } from 'vue-jsonp'
+import mitt from '../methods/mitter'
+import cityData from '../json/data.json'
 
 export default {
   components: {
@@ -152,8 +170,23 @@ export default {
       cartsMsg: {},
       personal: {},
       shipment: {},
-      city: [],
+      city: {},
+      country: [],
+      address: {
+        city: '',
+        country: '',
+      },
+      check: false,
+      orderDetail: {},
     }
+  },
+  watch: {
+    check() {
+      if (this.check) {
+        this.shipment.person = this.personal.name
+        this.shipment.cellphone = this.personal.phone
+      }
+    },
   },
   methods: {
     showOrder() {
@@ -173,18 +206,38 @@ export default {
       })
     },
     getCity() {
-      const getCityApi = 'http://api.opencube.tw/twzipcode/get-citys'
-      jsonp(getCityApi).then((res) => {
-        console.log(res)
-      })
+      const id = document.getElementById('city')
+      for (const [key, value] of Object.entries(this.city)) {
+        if (id.value === key) {
+          this.country = value
+        }
+      }
     },
     submitOrder() {
-      console.log(this.personal)
+      const getOrderApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order`
+      const user = {
+        name: this.shipment.person,
+        email: this.personal.email,
+        tel: this.shipment.cellphone,
+        address: `${this.address.city}${this.address.country}${this.shipment.address}`,
+      }
+      this.$http.post(getOrderApi, { data: { user, message: this.personal.remark } }).then((res) => {
+        console.log(res.data)
+        if (res.data.success) {
+          this.orderDetail = {
+            createTime: res.data.create_at,
+            id: res.data.orderId,
+          }
+          console.log(this.orderDetail)
+          mitt.emit('orderDetail', this.orderDetail)
+          // setTimeout(() => this.$router.push({ path: '/order/check' }), 2000)
+        }
+      })
     },
   },
   created() {
     this.updateCarts()
-    this.getCity()
+    this.city = cityData
   },
 }
 </script>

@@ -52,23 +52,23 @@
       <tbody>
         <tr>
           <th>成立時間:</th>
-          <td>2021/08/04</td>
+          <td>{{ $filter.date(order.create_at) }}</td>
         </tr>
         <tr>
           <th>收件人姓名:</th>
-          <td>林小明</td>
+          <td>{{ order.user.name }}</td>
         </tr>
         <tr>
           <th>收件人收機號碼:</th>
-          <td>0912345678</td>
+          <td>{{ order.user.tel }}</td>
         </tr>
         <tr>
           <th>收件人地址:</th>
-          <td>彰化縣北斗鎮12李12路</td>
+          <td>{{ order.user.address }}</td>
         </tr>
         <tr>
           <th>付款狀態:</th>
-          <td class="text-danger">尚未付款</td>
+          <td class="text-danger" v-if="!order.is_paid">尚未付款</td>
         </tr>
         <tr>
           <th>
@@ -84,6 +84,7 @@
 <script>
 import navbar from '../components/Navbar.vue'
 import Collapse from 'bootstrap/js/dist/collapse'
+import mitt from '../methods/mitter'
 
 export default {
   components: {
@@ -93,6 +94,8 @@ export default {
     return {
       carts: [],
       cartsMsg: {},
+      orderId: '',
+      order: {},
     }
   },
   methods: {
@@ -112,9 +115,19 @@ export default {
         }
       })
     },
+    getOrder() {
+      const getOrderApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order/${this.orderId}`
+      this.$http.get(getOrderApi).then((res) => {
+        this.order = res.data.order
+      })
+    },
   },
   created() {
     this.updateCarts()
+    mitt.on('orderDetail', (res) => {
+      this.orderId = res.id
+      this.getOrder()
+    })
   },
 }
 </script>

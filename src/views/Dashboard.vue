@@ -9,7 +9,7 @@
         <a href="#/dashboard/coupon" class="list-group-item"><i class="fas fa-receipt"></i>優惠券</a>
         <a href="#/dashboard/orders" class="list-group-item"><i class="fas fa-box-open"></i> 訂單</a>
         <a href="#" class="list-group-item"><i class="fas fa-file-image"></i>貼文</a>
-        <a href="#/about" class="list-group-item"><i class="fas fa-sign-out-alt"></i>登出</a>
+        <a href="#/" class="list-group-item"><i class="fas fa-sign-out-alt"></i>登出</a>
       </div>
     </div>
     <div class="col-10 db-content mt-3">

@@ -7,9 +7,9 @@
           <a href="" :style="{ backgroundImage: 'url(' + data.product.imageUrl + ')' }" class="cart-img"></a>
           <div class="px-3">
             <a href="" class="title text-border text-light" @click.prevent="">{{ data.product.title }}</a>
-            <p class="text-light">NT ${{ data.final_total }}</p>
+            <p class="text-light">NT ${{ $filter.currency(data.final_total) }}</p>
             <p class="text-light">
-              數量: <span>{{ data.qty }}盒/NT ${{ data.product.price }}</span>
+              數量: <span>{{ data.qty }}盒/NT ${{ $filter.currency(data.product.price) }}</span>
             </p>
           </div>
           <div class="del-btn">

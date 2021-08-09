@@ -1,5 +1,10 @@
 <template>
   <div class="row mt-4">
+    <ul id="progressbar" class="mt-3">
+      <li class="active">購物車</li>
+      <li>填寫資料</li>
+      <li>訂單確認</li>
+    </ul>
     <div class="col-7">
       <table class="table bg-light">
         <thead>
@@ -79,6 +84,7 @@ export default {
       const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(getCartsApi).then((res) => {
         this.carts = res.data.data.carts
+        console.log(this.carts)
         this.cartsMsg = {
           total: res.data.data.total,
           final_total: res.data.data.final_total,

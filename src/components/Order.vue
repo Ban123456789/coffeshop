@@ -9,11 +9,6 @@
         <li class="breadcrumb-item active" aria-current="page">Data</li>
       </ol>
     </nav>
-    <ul id="progressbar" class="mt-3">
-      <li class="active">購物車</li>
-      <li>填寫資料</li>
-      <li>訂單確認</li>
-    </ul>
     <router-view></router-view>
   </div>
 </template>

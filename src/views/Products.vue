@@ -14,27 +14,27 @@
       <div class="col-3">
         <ul class="category">
           <li class="title">商品介紹</li>
-          <li>
+          <li :class="{ active: activeOpt === '全部商品' }">
             <a href="" @click.prevent="getProducts('全部商品')"
               ><img src="/icons/stand.png" class="icon-size" alt="" />全部商品</a
             >
           </li>
-          <li>
+          <li :class="{ active: activeOpt === '熱門咖啡' }">
             <a href="" @click.prevent="getProducts('熱門咖啡')"
               ><img src="/icons/latte.png" class="icon-size" alt="" />熱門咖啡</a
             >
           </li>
-          <li>
+          <li :class="{ active: activeOpt === '大人系列' }">
             <a href="" @click.prevent="getProducts('大人系列')"
               ><img src="/icons/coffee-cup.png" class="icon-size" alt="" />大人系列</a
             >
           </li>
-          <li>
+          <li :class="{ active: activeOpt === '嚴選豆單' }">
             <a href="" @click.prevent="getProducts('嚴選豆單')"
               ><img src="/icons/coffee-beans.png" class="icon-size" alt="" />精選豆單</a
             >
           </li>
-          <li>
+          <li :class="{ active: activeOpt === '精美禮盒' }">
             <a href="" @click.prevent="getProducts('精美禮盒')"
               ><img src="/icons/gift.png" class="icon-size" alt="" />精美禮盒</a
             >
@@ -45,8 +45,13 @@
         <div class="mb-4 row">
           <p class="col-8 category-title text-space title text-border text-light d-inline-block">{{ category }}</p>
           <section class="col-4 d-flex align-items-center justify-content-between">
-            <select class="form-select form-select-sm mr-3" aria-label=".form-select-sm example">
-              <option selected disabled>預設排序</option>
+            <select
+              class="form-select form-select-sm mr-3"
+              aria-label=".form-select-sm example"
+              v-model="sort"
+              @click="filterData"
+            >
+              <option value="" disabled>預設排序</option>
               <option value="1">最新上架</option>
               <option value="2">價格由高到低</option>
               <option value="3">價格由低到高</option>
@@ -90,6 +95,8 @@ export default {
       products: [],
       category: '全部商品',
       isLoading: false,
+      sort: '',
+      activeOpt: '全部商品',
     }
   },
   methods: {
@@ -100,14 +107,18 @@ export default {
         this.products = []
         res.data.products.forEach((item) => {
           if (category === item.category) {
+            this.sort = ''
             this.products.push(item)
             this.category = item.category
+            this.activeOpt = category
             this.isLoading = false
           }
         })
         if (category === '全部商品') {
+          this.sort = ''
           this.products = res.data.products
           this.category = '全部商品'
+          this.activeOpt = '全部商品'
           this.isLoading = false
         }
       })
@@ -131,6 +142,21 @@ export default {
         }
         this.isLoading = false
       })
+    },
+    filterData() {
+      if (this.sort === '2') {
+        this.products.sort((a, b) => {
+          return b.price - a.price
+        })
+      } else if (this.sort === '3') {
+        this.products.sort((a, b) => {
+          return a.price - b.price
+        })
+      } else {
+        this.products.sort((a, b) => {
+          return a.num - b.num
+        })
+      }
     },
   },
   created() {

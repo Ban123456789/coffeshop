@@ -3,13 +3,43 @@
     <div class="col-2">
       <div class="db-sidebar">
         <h1 class="text-center pt-3 pb-5"><i class="fas fa-chart-line"></i>Controller</h1>
-        <a href="#/dashboard/editproducts" class="list-group-item sidebar-choose"
-          ><i class="fas fa-clipboard-list"></i>訂單</a
+        <a
+          href="#/dashboard/editproducts"
+          class="list-group-item"
+          :class="{ 'sidebar-choose': activeOpt === '商品列表' }"
+          @click="changeClass('商品列表')"
+          ><i class="fas fa-clipboard-list"></i>商品列表</a
         >
-        <a href="#/dashboard/coupon" class="list-group-item"><i class="fas fa-receipt"></i>優惠券</a>
-        <a href="#/dashboard/orders" class="list-group-item"><i class="fas fa-box-open"></i> 訂單</a>
-        <a href="#" class="list-group-item"><i class="fas fa-file-image"></i>貼文</a>
-        <a href="#/" class="list-group-item"><i class="fas fa-sign-out-alt"></i>登出</a>
+        <a
+          href="#/dashboard/coupon"
+          class="list-group-item"
+          :class="{ 'sidebar-choose': activeOpt === '優惠券' }"
+          @click="changeClass('優惠券')"
+          ><i class="fas fa-receipt"></i>優惠券</a
+        >
+        <a
+          href="#/dashboard/orders"
+          class="list-group-item"
+          :class="{ 'sidebar-choose': activeOpt === '訂單' }"
+          @click="changeClass('訂單')"
+          ><i class="fas fa-box-open"></i> 訂單</a
+        >
+        <a href="#" class="list-group-item"
+          ><i
+            class="fas fa-file-image"
+            :class="{ 'sidebar-choose': activeOpt === '貼文' }"
+            @click="changeClass('貼文')"
+          ></i
+          >貼文</a
+        >
+        <a href="#/" class="list-group-item"
+          ><i
+            class="fas fa-sign-out-alt"
+            :class="{ 'sidebar-choose': activeOpt === '登出' }"
+            @click="changeClass('登出')"
+          ></i
+          >登出</a
+        >
       </div>
     </div>
     <div class="col-10 db-content mt-3">
@@ -34,6 +64,7 @@ export default {
   data() {
     return {
       choose: false,
+      activeOpt: '商品列表',
     }
   },
   provide() {
@@ -53,6 +84,11 @@ export default {
         this.$router.push('/login')
       }
     })
+  },
+  methods: {
+    changeClass(message) {
+      this.activeOpt = message
+    },
   },
 }
 </script>

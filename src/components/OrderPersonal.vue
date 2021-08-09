@@ -1,6 +1,11 @@
 <template>
   <navbar></navbar>
   <div class="row">
+    <ul id="progressbar" class="mt-3">
+      <li>購物車</li>
+      <li class="active">填寫資料</li>
+      <li>訂單確認</li>
+    </ul>
     <div class="col-7">
       <div class="personal-title title text-border table-radius">
         顧客資料

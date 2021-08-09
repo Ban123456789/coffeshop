@@ -1,6 +1,13 @@
 <template>
   <navbar></navbar>
-  <div class="container px-5">
+  <div>
+    <ul id="progressbar" class="mt-3">
+      <li>購物車</li>
+      <li>填寫資料</li>
+      <li class="active">訂單確認</li>
+    </ul>
+  </div>
+  <div class="container">
     <!-- 購物車資訊 -->
     <div class="accordion" id="orderCheck">
       <div class="accordion-item">
@@ -14,7 +21,8 @@
             aria-controls="collapseOne"
             @click="showOrder"
           >
-            購物車 ({{ carts.length }})件
+            <!-- 購物車 ({{ carts.length }})件 -->
+            購物車
           </button>
         </h2>
         <div id="orders" class="accordion-collapse collapse show" ref="orders">
@@ -92,8 +100,7 @@ export default {
   },
   data() {
     return {
-      carts: [],
-      cartsMsg: {},
+      carts: {},
       orderId: '',
       order: {},
     }
@@ -105,25 +112,16 @@ export default {
         toggle: true,
       })
     },
-    updateCarts() {
-      const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
-      this.$http.get(getCartsApi).then((res) => {
-        this.carts = res.data.data.carts
-        this.cartsMsg = {
-          total: res.data.data.total,
-          final_total: res.data.data.final_total,
-        }
-      })
-    },
     getOrder() {
       const getOrderApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order/${this.orderId}`
       this.$http.get(getOrderApi).then((res) => {
         this.order = res.data.order
+        this.carts = res.data.order.products
+        console.log(res.data)
       })
     },
   },
   created() {
-    this.updateCarts()
     mitt.on('orderDetail', (res) => {
       this.orderId = res.id
       this.getOrder()

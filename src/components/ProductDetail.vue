@@ -16,11 +16,13 @@
         <p class="text-light d-inline-block title" style="margin-right: 10px">NT ${{ data.price }}</p>
         <del class="text-light" v-if="data.price !== data.origin_price">NT ${{ data.origin_price }}</del>
         <p class="text-light title mt-3 mb-1">數量</p>
-        <button class="count text-border" @click="countBtn('reduce')">-</button>
+        <button class="count text-border" @click="countBtn('reduce', count)">-</button>
         <input type="number" class="mb-5 count-content" :value="count" disabled />
-        <button class="count text-border" @click="countBtn('add')">+</button>
+        <button class="count text-border" @click="countBtn('add', count)">+</button>
         <section>
-          <a href="" class="btn btn-danger" style="margin-right: 10px; width: 48%">加入購物車</a>
+          <a href="" class="btn btn-danger" style="margin-right: 10px; width: 48%" @click.prevent="addCart(data.id)"
+            >加入購物車</a
+          >
           <a href="" class="btn btn-danger" style="width: 48%">立即購買</a>
         </section>
       </div>
@@ -44,6 +46,7 @@
 
 <script>
 import navbar from './Navbar.vue'
+import swal from 'sweetalert'
 
 export default {
   components: {
@@ -55,6 +58,7 @@ export default {
       is_show: false,
       data: {},
       count: 1,
+      isLoading: false,
     }
   },
   mounted() {
@@ -76,12 +80,33 @@ export default {
         this.is_show = true
       }
     },
-    countBtn(method) {
-      if (method === 'add' && this.count < 10) {
-        this.count++
-      } else if (method === 'reduce' && this.count > 1) {
-        this.count--
+    countBtn(method, count) {
+      console.log(method, count, this.$route.params.id)
+      if (method === 'add' && count < 10) {
+        this.count = count + 1
+      } else if (method === 'reduce' && count > 1) {
+        this.count = count - 1
       }
+    },
+    addCart(id) {
+      const addCartApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      let data = {
+        product_id: id,
+        qty: this.count,
+      }
+      this.isLoading = true
+      this.$http.post(addCartApi, { data: data }).then((res) => {
+        console.log(res.data)
+        if (res.data.success) {
+          swal({
+            title: '成功加入購物車',
+            icon: 'success',
+            timer: 2000,
+            button: false,
+          })
+        }
+        this.isLoading = false
+      })
     },
   },
 }

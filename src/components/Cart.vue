@@ -16,7 +16,12 @@
             <a class="btn btn-danger" @click.prevent="delCart(false, data.id)">刪除</a>
           </div>
         </li>
-        <a href="#/order/cart" class="btn btn-outline-info mt-5 mx-3 d-block w100" :class="{ 'mouse-not': isLoading }"
+        <p v-if="carts.length === 0" class="w100 text-light text-center p-5">購務車空空的喔!</p>
+        <a
+          href="#/order/cart"
+          class="btn btn-outline-info mt-5 mx-3 d-block w100"
+          :class="{ 'mouse-not': isLoading }"
+          v-else
           >前往結帳</a
         >
         <a href="" class="btn btn-outline-danger mt-3 mx-3 d-block w100" @click.prevent="delCart(true)"

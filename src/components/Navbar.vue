@@ -35,10 +35,11 @@
               ><img src="/icons/magnifier.png" class="nav-icon-size" alt="" ref="tooltipSerch"
             /></router-link>
           </li>
-          <li class="nav-item px-2">
+          <li class="nav-item px-2 cart-li">
             <label for="cartBtn"
-              ><img src="/icons/b-cart.png" class="nav-icon-size" alt="" @click="updateCarts" ref="tooltipCart"
-            /></label>
+              ><img src="/icons/b-cart.png" class="nav-icon-size" alt="" @click="updateCarts" ref="tooltipCart" />
+              <div class="cart-num" v-if="carts.length !== 0">{{ carts.length }}</div>
+            </label>
             <input id="cartBtn" type="checkbox" name="cartBtn" class="d-none" />
             <cart :carts="carts" :updateCarts="updateCarts"></cart>
           </li>

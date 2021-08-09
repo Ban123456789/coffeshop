@@ -38,8 +38,8 @@
           <li class="nav-item px-2 cart-li">
             <label for="cartBtn"
               ><img src="/icons/b-cart.png" class="nav-icon-size" alt="" @click="updateCarts" ref="tooltipCart" />
-              <div class="cart-num" v-if="carts.length !== 0">{{ carts.length }}</div>
             </label>
+            <div class="cart-num" v-if="cartsNum !== 0">{{ cartsNum }}</div>
             <input id="cartBtn" type="checkbox" name="cartBtn" class="d-none" />
             <cart :carts="carts" :updateCarts="updateCarts"></cart>
           </li>
@@ -52,6 +52,7 @@
 <script>
 import toolTip from '../methods/toolTip.js'
 import cart from '../components/Cart.vue'
+import mitt from '../methods/mitter'
 
 export default {
   components: {
@@ -60,7 +61,18 @@ export default {
   data() {
     return {
       carts: [],
+      cartsNum: 0,
     }
+  },
+  watch: {
+    carts() {
+      this.cartsNum = this.carts.length
+    },
+  },
+  created() {
+    mitt.on('carts', (data) => {
+      this.cartsNum = data.length
+    })
   },
   mounted() {
     const tipLogin = this.$refs.tooltipLogin

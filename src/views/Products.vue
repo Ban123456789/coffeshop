@@ -84,6 +84,7 @@
 import navbar from '../components/Navbar.vue'
 import coffeeLoading from '../components/cofeeLoding.vue'
 import swal from 'sweetalert'
+import mitt from '../methods/mitter'
 
 export default {
   components: {
@@ -97,6 +98,7 @@ export default {
       isLoading: false,
       sort: '',
       activeOpt: '全部商品',
+      carts: [],
     }
   },
   methods: {
@@ -123,6 +125,14 @@ export default {
         }
       })
     },
+    updateCarts() {
+      const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.get(getCartsApi).then((res) => {
+        this.carts = res.data.data.carts
+        mitt.emit('carts', this.carts)
+        console.log(this.carts)
+      })
+    },
     addCart(id) {
       const addCartApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
       let data = {
@@ -140,6 +150,7 @@ export default {
             button: false,
           })
         }
+        this.updateCarts()
         this.isLoading = false
       })
     },

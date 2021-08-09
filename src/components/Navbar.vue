@@ -51,7 +51,6 @@
 <script>
 import toolTip from '../methods/toolTip.js'
 import cart from '../components/Cart.vue'
-import updateCart from '../methods/updateCart.js'
 
 export default {
   components: {

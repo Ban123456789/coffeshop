@@ -102,7 +102,13 @@ export default {
     return {
       carts: {},
       orderId: '',
-      order: {},
+      order: {
+        user: {
+          name: '',
+          tel: '',
+          address: '',
+        },
+      },
     }
   },
   methods: {

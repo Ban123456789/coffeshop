@@ -6,7 +6,6 @@ export default function(tipEl, title) {
         animation: true,
         placement: 'bottom',
         title: title,
+        trigger: 'hover focus'
       })
-  
-      tooltip.hide()
 }

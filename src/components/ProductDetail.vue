@@ -47,6 +47,7 @@
 <script>
 import navbar from './Navbar.vue'
 import swal from 'sweetalert'
+import mitt from '../methods/mitter'
 
 export default {
   components: {
@@ -59,6 +60,7 @@ export default {
       data: {},
       count: 1,
       isLoading: false,
+      carts: [],
     }
   },
   mounted() {
@@ -88,6 +90,14 @@ export default {
         this.count = count - 1
       }
     },
+    updateCarts() {
+      const getCartsApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.get(getCartsApi).then((res) => {
+        this.carts = res.data.data.carts
+        mitt.emit('carts', this.carts)
+        console.log(this.carts)
+      })
+    },
     addCart(id) {
       const addCartApi = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`
       let data = {
@@ -105,6 +115,7 @@ export default {
             button: false,
           })
         }
+        this.updateCarts()
         this.isLoading = false
       })
     },
